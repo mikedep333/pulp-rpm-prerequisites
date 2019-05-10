@@ -11,6 +11,7 @@ packages:
   - libcurl-devel
   - libxml2-devel
   - python3-devel
+  - python3-createrepo_c
   - rpm-devel
   - openssl-devel
   - sqlite-devel
