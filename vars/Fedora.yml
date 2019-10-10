@@ -5,14 +5,15 @@ packages:
   - make
   - cmake
   - bzip2-devel
+  - cairo-gobject-devel
   - expat-devel
   - file-devel
   - glib2-devel
+  - gobject-introspection-devel
   - libcurl-devel
   - libmodulemd-devel
   - libxml2-devel
   - python3-devel
-  - python3-gobject  # Provides 'gi' Python module
   - python3-libmodulemd
   - rpm-devel
   - openssl-devel
@@ -20,3 +21,6 @@ packages:
   - xz-devel
   - zchunk-devel
   - zlib-devel
+
+rpm_prereq_pip_packages:
+  - PyGObject
