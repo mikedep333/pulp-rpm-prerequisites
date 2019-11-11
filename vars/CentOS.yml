@@ -21,6 +21,7 @@ packages:
   - ninja-build
   - python36-devel
   - python36-gobject  # Provides 'gi' Python module
+  - python3-libcomps
   - rpm-devel
   - openssl-devel
   - sqlite-devel
