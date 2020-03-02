@@ -9,8 +9,6 @@ if [ ! -e roles/pulp.pulp_rpm_prerequisites ]; then
   ln -s $GITHUB_WORKSPACE roles/pulp.pulp_rpm_prerequisites
 fi
 
-sed -i 's/pulp_use_system_wide_pkgs: false/pulp_use_system_wide_pkgs: true/g' roles/pulp/defaults/main.yml
-find ./molecule/*/group_vars/all -exec sh -c "yq w -i {} pulp_use_system_wide_pkgs true" \;
 find ./molecule/*source*/group_vars/all -exec sh -c "yq w -i {} pulp_install_plugins.pulp-rpm.source_dir \/var\/lib\/pulp\/devel\/pulp_rpm" \;
 find ./molecule/*upgrade*/group_vars/all -exec sh -c "yq w -i {} pulp_install_plugins.pulp-rpm.upgrade true" \;
 find ./molecule/*/group_vars/all -exec sh -c "yq w -i {} pulp_install_plugins.pulp-rpm.prereq_role pulp.pulp_rpm_prerequisites" \;
@@ -20,5 +18,6 @@ find ./molecule/*/group_vars/all -exec sh -c "echo; echo {}; cat {}" \;
 find ./molecule/*upgrade*/molecule.yml -exec sed -i '/quay.io\/pulp\/pulp-ci-dbuster:3.0.0/,+3 d' {} \;
 find ./molecule/*upgrade*/molecule.yml -exec sed -i '/debian-10/d' {} \;
 find ./molecule/*/molecule.yml -exec sed -i '/debian-10/,+3 d' {} \;
+find ./molecule/*/molecule.yml -exec sed -i 's/- \/tmp/- \/tmp:exec,mode=1777/g' {} \;
 
 tox
