@@ -1,0 +1,25 @@
+---
+pulp_default_admin_password: password
+pulp_source_dir: '/var/lib/pulp/devel/pulpcore'
+pulp_git_commitish: master
+# We are setting these upgrade variables so that it will test
+# upgrading dependencies.
+pulp_upgrade: true
+# Needed to determine whether or not pulpcore was actually upgraded, to
+# trigger the handler.
+pulp_pip_editable: false
+pulp_install_plugins:
+  pulp-file:
+    upgrade: true
+    source_dir: "/var/lib/pulp/devel/pulp_file"
+    git_commitish: master
+  pulp-rpm:
+    upgrade: true
+    source_dir: "/var/lib/pulp/devel/pulp_rpm"
+    git_commitish: master
+    prereq_role: "pulp.pulp_rpm_prerequisites"
+developer_user_home: /var/lib/pulp
+developer_user: pulp
+pulp_settings:
+  secret_key: secret
+  content_origin: "http://{{ ansible_fqdn }}"

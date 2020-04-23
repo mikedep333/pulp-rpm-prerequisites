@@ -14,11 +14,14 @@ if [ ! -e roles/pulp.pulp_rpm_prerequisites ]; then
   ln -s ${GITHUB_WORKSPACE:-../../pulp_rpm_prerequisites} roles/pulp.pulp_rpm_prerequisites
 fi
 
-find ./molecule/*source*/group_vars/all -exec sh -c "yq w -i {} pulp_install_plugins.pulp-rpm.source_dir \/var\/lib\/pulp\/devel\/pulp_rpm" \;
-find ./molecule/*upgrade*/group_vars/all -exec sh -c "yq w -i {} pulp_install_plugins.pulp-rpm.upgrade true" \;
-find ./molecule/*/group_vars/all -exec sh -c "yq w -i {} pulp_install_plugins.pulp-rpm.prereq_role pulp.pulp_rpm_prerequisites" \;
-find ./molecule/*/group_vars/all -exec sh -c "echo; echo {}; cat {}" \;
+for scenario in {release,source}-{static,dynamic,upgrade}
+do
+  rm molecule/${scenario}/group_vars/all
+  cp -T roles/pulp.pulp_rpm_prerequisites/.pulp_installer_molecule/${scenario}/group_vars/all\
+        molecule/${scenario}/group_vars/all
+done
 
+find ./molecule/*/group_vars/all -exec sh -c "echo; echo {}; cat {}" \;
 
 find ./molecule/*upgrade*/molecule.yml -exec sed -i '/quay.io\/pulp\/pulp-ci-dbuster:3.0.0/,+3 d' {} \;
 find ./molecule/*upgrade*/molecule.yml -exec sed -i '/debian-10/d' {} \;

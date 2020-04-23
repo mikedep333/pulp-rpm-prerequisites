@@ -1,0 +1,16 @@
+---
+pulp_default_admin_password: password
+pulp_upgrade: true
+pulp_install_plugins:
+  pulp-file:
+    upgrade: true
+#   version: "3.3.0"
+#   pip_version_specifier: "~=3.3.0"
+  pulp-rpm:
+    upgrade: true
+    prereq_role: "pulp.pulp_rpm_prerequisites"
+#   version: "3.3.0"
+#   pip_version_specifier: "~=3.3.0"
+pulp_settings:
+  secret_key: secret
+  content_origin: "http://{{ ansible_fqdn }}"
